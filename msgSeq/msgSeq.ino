@@ -1,10 +1,16 @@
 #include <Process.h>
 
-
-String instruments[] = {"PS", "BD", "SD","KI","SN","CR"};
+String hashTags[] = {"PS", "BD", "SD", "KI", "SN", "CR","I1","I2"};
 //PS: play sample, BD: bass drum, SD: snare, KI: kick,SN: snare, CR: crash
+//I1: instrument 1, I2: instrument 2
+// marker // TODO
+int drumsStart = 1;
+int drumsEnd = 5;
+int instrumentStart = 6;
+int instrumentEnd = 7;
+//
 const int numIns = 6;
-byte patterns[numIns-1];
+byte patterns[numIns - 1];
 // length
 const int patternL = 8;
 
@@ -42,11 +48,11 @@ void loop() {
   if (time > nextB) {
     nextB += nextBInc;
     for (int i = 1; i < numIns; i++) {
-      if (patterns[i-1] & bs[pos])
-        Serial.print(instruments[i]);
+      if (patterns[i - 1] & bs[pos])
+        Serial.print(hashTags[i]);
       else
         Serial.print("..");
-        Serial.print("-");
+      Serial.print("-");
     }
     Serial.println("");
     pos = (pos + 1) % patternL;
@@ -58,21 +64,24 @@ void parseMessage(String msg) {
   // instrument
   if (hashInd == -1)
     return;
-  int instrument = 0;
+  int tag = 0;
   String s = msg.substring(hashInd + 1, hashInd + 3);
   for (int i = 0; i < numIns; i++) {
-    if (s == instruments[i]) {
-      instrument = i;
+    if (s == hashTags[i]) {
+      tag = i;
       Serial.println(s);
       break;
     }
   }
-  if (instrument == 0)
+  if (tag == 0)
     playSample(msg.substring(hashInd + 4));
   else {
-    instrument--;
+    tag--;
     // pattern
     String pa = msg.substring(hashInd + 4, hashInd + 4 + patternL);
+    if (pa.charAt(0) == 'p') {
+      playDrumSample(s);
+    }
     byte pattern = 0;
     Serial.println(pa);
     for (int i = 0; i < patternL; i++) {
@@ -81,11 +90,15 @@ void parseMessage(String msg) {
       pattern += b;
     }
     Serial.println(pattern);
-    patterns[instrument] = pattern;
+    patterns[tag] = pattern;
   }
 }
 
-void playSample(String msg) {
+void playSample(String sampleName) {
   Process p;
-  p.runShellCommandAsynchronously("madplay "+sampleFolder+msg);
+  p.runShellCommandAsynchronously("madplay " + sampleFolder + sampleName+".wav");
 }
+
+void playDrumSample(String sampleName) {
+  
+  }
