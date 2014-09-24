@@ -1,13 +1,15 @@
 #include <Process.h>
 
-String hashTags[] = {"PS", "BD", "SD", "KI", "SN", "CR","I1","I2"};
+String hashTags[] = {"PS", "BD", "SD", "KI", "SN", "CR", "I1", "I2"};
 //PS: play sample, BD: bass drum, SD: snare, KI: kick,SN: snare, CR: crash
 //I1: instrument 1, I2: instrument 2
 // marker // TODO
-int drumsStart = 1;
-int drumsEnd = 5;
-int instrumentStart = 6;
-int instrumentEnd = 7;
+const int DRUMSSTART = 1;
+const int DRUMSEND = 5;
+const int INSTRUMENTSTART = 6;
+const int INSTRUMENTEND = 7;
+const int EFFECTSTART = 8;
+const int EFFECTEND = 10;
 //
 const int numIns = 6;
 byte patterns[numIns - 1];
@@ -24,6 +26,9 @@ int nextBInc;
 int pos;
 // sequence-bits
 int bs[] = {1, 2, 4, 8, 16, 32, 64, 128, 256};
+
+int instrument_1_seq[8];
+int instrument_2_seq[8];
 
 const String sampleFolder = "/mnt/twitterOrchestra/samples/";
 
@@ -75,30 +80,36 @@ void parseMessage(String msg) {
   }
   if (tag == 0)
     playSample(msg.substring(hashInd + 4));
-  else {
-    tag--;
-    // pattern
+  else if (tag >= DRUMSSTART && tag <= DRUMSEND) {
     String pa = msg.substring(hashInd + 4, hashInd + 4 + patternL);
-    if (pa.charAt(0) == 'p') {
-      playDrumSample(s);
-    }
-    byte pattern = 0;
-    Serial.println(pa);
-    for (int i = 0; i < patternL; i++) {
-      pattern = pattern << 1;
-      byte b = pa.charAt(i) == '1' ? 1 : 0;
-      pattern += b;
-    }
-    Serial.println(pattern);
-    patterns[tag] = pattern;
+    drums(tag - DRUMSSTART, pa);
+  } else if (tag >= INSTRUMENTSTART && tag <= INSTRUMENTEND) {
+    
   }
 }
 
 void playSample(String sampleName) {
   Process p;
-  p.runShellCommandAsynchronously("madplay " + sampleFolder + sampleName+".wav");
+  p.runShellCommandAsynchronously("madplay " + sampleFolder + sampleName + ".wav");
 }
 
-void playDrumSample(String sampleName) {
-  
+void playDrumSample(int tag) {
+
+}
+
+void drums(int tag, String patternS) {
+  // pattern
+  if (patternS.charAt(0) == 'p') {
+    playDrumSample(tag);
+    return;
   }
+  byte pattern = 0;
+  Serial.println(patternS);
+  for (int i = 0; i < patternL; i++) {
+    pattern = pattern << 1;
+    byte b = patternS.charAt(i) == '1' ? 1 : 0;
+    pattern += b;
+  }
+  Serial.println(pattern);
+  patterns[tag] = pattern;
+}
