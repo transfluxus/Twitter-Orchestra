@@ -15,8 +15,8 @@ String midiChannel = "java-ableton";
 long nextMsgBufferGet = 0;
 final int msgBufferDelay = 5000;
 
-long nextTimeLine = timelineDelay;
 final int timelineDelay = 31000;
+long nextTimeLine = timelineDelay;
 
 boolean twitterStream = true;
 boolean AllMsgs = false;

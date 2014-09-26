@@ -27,7 +27,7 @@ void playSample(String sampleName) {
   if (index != -1)
     myBus.sendNoteOn(3, sampleBaseNote+index, 127);
   else {
-    println("Sample with name: "+s +" not found");
+    println("Sample with name: "+s[0] +" not found");
   }
 }
 

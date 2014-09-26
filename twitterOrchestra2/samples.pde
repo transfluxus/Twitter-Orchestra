@@ -1,4 +1,4 @@
-String[] sampleNames = { "birds","ambient"
+String[] sampleNames = { "birds","ambient","bamboo"
 };
 
 int getSampleIndex(String sampleName) {
