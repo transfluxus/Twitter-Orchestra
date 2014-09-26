@@ -4,7 +4,7 @@ String hashTags[] = {
   "PS", "BD", "SD", "KI", "CB", "CR", "I1", "I2", "F1", "F2", "F3", "BP", "CT"
 };
 
-boolean checkLastMsgs = false;
+boolean checkLastMsgs = true;
 ArrayList<String> lastMsgs = new ArrayList<String>();
 int msgBufferSize = 10;
 
@@ -106,12 +106,11 @@ void parseMessage(String msg) {
     if (ps.length<2)
       return;
     int ctrlNo = int(ps[0]);
-    int val = int(ps[0]);
+    int val = int(ps[1]);
     val = constrain(val, 0, 127);
     sendControl(ctrlNo, val);
   }
 }
-
 
 void drums(int tag, String patternS) {
   //  println("d "+patternS+ " "+patternS.length());
@@ -158,9 +157,11 @@ boolean checkMsgBuffer(String msg) {
   } 
   catch(Exception e) {
   }
-  for (int i=lastMsgs.size ()-1; i >= 0; i--) 
+  for (int i=lastMsgs.size ()-1; i >= 0; i--) {
+//    println("compare: "+msg+ ","+lastMsgs.get(i));
     if (lastMsgs.get(i).equals(msg))
-      return false;  
+      return false;
+  }
   return true;
 }
 

@@ -22,11 +22,12 @@ void playNote(int instrument, int note) {
 }
 
 void playSample(String sampleName) {
-  int index =getSampleIndex(sampleName);
+  String[] s = split(sampleName,' ');
+  int index =getSampleIndex(s[0]);
   if (index != -1)
     myBus.sendNoteOn(3, sampleBaseNote+index, 127);
   else {
-    println("Sample with name: "+sampleName +" not found");
+    println("Sample with name: "+s +" not found");
   }
 }
 

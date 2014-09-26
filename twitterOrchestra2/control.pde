@@ -2,7 +2,6 @@ import java.util.TreeSet;
 
 TreeSet<Integer> ctrlNos = new TreeSet<Integer>();
 
-
 void sendCtrlInit(int ctrl) {
   sendControl(ctrl, 100);
 }
@@ -12,7 +11,7 @@ void sendControl(int ctrl, int value) {
     println("Controlnumber not sent yet: "+ctrl+" map it in ableton ...");
     ctrlNos.add(ctrl);
   }
-  println(ctrl, value);
+//  println(ctrl, value);
   myBus.sendControllerChange(0, ctrl, value);
 }
 

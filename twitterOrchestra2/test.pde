@@ -12,8 +12,7 @@ String[] testStrings = {
     , "#BD 11001000"
 };
 
-void sendDefaultTest(int index) {
-  
+void sendDefaultTest(int index) {  
  // println(index);
   if(index >= 17 && index <= 27) // a,b,c,d,e,f,g,h,i,j
       playSample(index-17);
@@ -29,5 +28,6 @@ void playSample(int index) {
 }
 
 void sendTest(String msg) {
-  parseMessage(msg);
+  //parseMessage(msg);
+  serialEvent(msg);
 }
