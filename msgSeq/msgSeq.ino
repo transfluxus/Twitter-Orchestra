@@ -1,4 +1,4 @@
-#include <Process.h>
+//#include <Process.h>
 
 String hashTags[] = {"PS", "BD", "SD", "KI", "CB", "CR", "I1", "I2"};
 //PS: play sample, BD: bass drum, SD: snare, KI: kick,CB: cowbell, CR: crash
@@ -17,7 +17,7 @@ byte patterns[numIns - 1];
 const int patternL = 8;
 
 const unsigned long MINUTE = 60000;
-int bpm = 120;
+int bpm = 135;
 // nextBeat
 unsigned long nextB;
 // time increase
@@ -37,11 +37,13 @@ void setup() {
 //  while (!Serial);
   String msg = "#BD 10001000";
   parseMessage(msg);
-  String msg2 = "#SD 01010101";
+  String msg2 = "#SD 01100110";
   parseMessage(msg2);
 
   String msg3 = "#I1 51.37.10.40.53.30.16.49";
   parseMessage(msg3);
+    String msg4 = "#I2 42.47.42.42.47.42.42.42";
+  parseMessage(msg4);
   /*  String msg3 = "#KI 10001010";
     parseMessage(msg3);
     String msg4 = "#CR 01000000";
@@ -62,13 +64,12 @@ void loop() {
         Serial.print("..");
       Serial.print("-");
     }
-    Serial.print("  ");
+    Serial.print(" ");
     Serial.print(instrument_seq[0][pos]);
     Serial.print("-");
     Serial.print(instrument_seq[1][pos]);
-    Serial.print("  ");
+   // Serial.print(" ");
     Serial.println("");
-    
     
     pos = (pos + 1) % patternL;
   }
@@ -106,8 +107,8 @@ void parseMessage(String msg) {
 }
 
 void playSample(String sampleName) {
-  Process p;
-  p.runShellCommandAsynchronously("madplay " + sampleFolder + sampleName + ".wav");
+//  Process p;
+//  p.runShellCommandAsynchronously("madplay " + sampleFolder + sampleName + ".wav");
 }
 
 void playDrumSample(int tag) {
