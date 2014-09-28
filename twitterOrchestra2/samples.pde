@@ -1,5 +1,4 @@
-String[] sampleNames = { "birds","ambient","bamboo"
-};
+
 
 int getSampleIndex(String sampleName) {
   for (int i=0; i < sampleNames.length; i++)

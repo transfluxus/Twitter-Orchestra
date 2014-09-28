@@ -58,6 +58,8 @@ void parseMessage(String msg) {
   }
   int tag = 0;
   String s = msg.substring(hashInd + 1, hashInd + 3);
+  s= s.toUpperCase();
+//  println(s);
   boolean found = false;
   for (int i = 0; i < numIns; i++) {
     if (s.equals(hashTags[i])) {

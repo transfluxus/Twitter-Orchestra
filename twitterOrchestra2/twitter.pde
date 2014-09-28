@@ -32,6 +32,8 @@ List<Status>statuses = null;
 TwitterFactory twitterFactory;
 Twitter twitter;
 
+boolean printTimeLine  = true;
+
 void connectTwitter() {  
 
   ConfigurationBuilder cb = new ConfigurationBuilder();  
@@ -56,8 +58,9 @@ void getTimeline() {
     println("Get timeline: " + e + " Status code: " + e.getStatusCode());
   }     
   for (Status status : statuses) {               
-    //println(status.getUser().getName() + ": " + status.getText());
-//    println(status.getUser().getName() + ": " + status.getText());
+    if (printTimeLine)
+      println(status.getUser().getName() + ": " + status.getText());
+    //    println(status.getUser().getName() + ": " + status.getText());
     serialEvent(status.getText());
   }
 } 

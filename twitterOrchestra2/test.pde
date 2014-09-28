@@ -1,3 +1,23 @@
+/*
+Tweet like this:
+#PS sampleName @twitrchestra
+example:
+#PS birds  @twitrchestra
+
+or one of these hashtags
+"BD", "SD", "KI", "CB", "CR"
+and a sequence of 8:
+10101010
+Example:
+#BD 10001000 @twitrchestra
+*/
+String[] sampleNames = { "birds","ambient","bamboo","tui",
+"metal-rub","door","dialup","boom","chicken","children-playing",
+"raindrops","pascal",
+"herbst","glitch1","glitch2","ship","guitar","sitar"
+};
+
+
 String[] testStrings = {
   "#BD 10001000"
     , "#SD 10101010"

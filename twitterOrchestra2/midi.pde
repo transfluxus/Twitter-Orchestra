@@ -24,8 +24,10 @@ void playNote(int instrument, int note) {
 void playSample(String sampleName) {
   String[] s = split(sampleName,' ');
   int index =getSampleIndex(s[0]);
-  if (index != -1)
+  if (index != -1) {
     myBus.sendNoteOn(3, sampleBaseNote+index, 127);
+     println("PLAYING: "+s[0]); 
+  }
   else {
     println("Sample with name: "+s[0] +" not found");
   }
